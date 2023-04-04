@@ -3,46 +3,46 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useParams } from "react-router-dom";
 import { auth, db } from "../firebaseConfig";
-import LikeArticle from "./LikeArticle";
+import LikeDiscussion from "./LikeDiscussion";
 import Comment from './Comment';
 
-export default function Article() {
+export default function Discussion() {
   const { id } = useParams();
-  const [article, setArticle] = useState(null);
+  const [Discussion, setDiscussion] = useState(null);
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    const docRef = doc(db, "Articles", id);
+    const docRef = doc(db, "Discussions", id);
     onSnapshot(docRef, (snapshot) => {
-      setArticle({ ...snapshot.data(), id: snapshot.id });
+      setDiscussion({ ...snapshot.data(), id: snapshot.id });
     });
   }, []);
   return (
     <div className="container border bg-light" style={{ marginTop: 70 }}>
-      {article && (
+      {Discussion && (
         <div className="row">
           <div className="col-3">
             <img
-              src={article.imageUrl}
-              alt={article.title}
+              src={Discussion.imageUrl}
+              alt={Discussion.title}
               style={{ width: "100%", padding: 10 }}
             />
           </div>
           <div className="col-9 mt-3">
-            <h2>{article.title}</h2>
-            <h5>Author: {article.createdBy}</h5>
-            <div> Posted on: {article.createdAt.toDate().toDateString()}</div>
+            <h2>{Discussion.title}</h2>
+            <h5>Author: {Discussion.createdBy}</h5>
+            <div> Posted on: {Discussion.createdAt.toDate().toDateString()}</div>
             <hr />
-            <h4>{article.description}</h4>
+            <h4>{Discussion.description}</h4>
 
             <div className="d-flex flex-row-reverse">
-              {user && <LikeArticle id={id} likes={article.likes} />}
+              {user && <LikeDiscussion id={id} likes={Discussion.likes} />}
               <div className="pe-2">
-                <p>{article.likes.length}</p>
+                <p>{Discussion.likes.length}</p>
               </div>
             </div>
             {/* comment  */}
-            <Comment id={article.id} />
+            <Comment id={Discussion.id} />
           </div>
         </div>
       )}

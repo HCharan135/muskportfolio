@@ -3,10 +3,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebaseConfig";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
-export default function LikeArticle({ id, likes }) {
+export default function LikeDiscussion({ id, likes }) {
   const [user] = useAuthState(auth);
 
-  const likesRef = doc(db, "Articles", id);
+  const likesRef = doc(db, "Discussions", id);
 
   const handleLike = () => {
     if (likes?.includes(user.uid)) {

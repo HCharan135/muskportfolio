@@ -1,32 +1,32 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../firebaseConfig";
-import DeleteArticle from "./DeleteArticle";
+import DeleteDiscussion from "./DeleteDiscussion";
 import { useAuthState } from "react-firebase-hooks/auth";
-import LikeArticle from "./LikeArticle";
+import LikeDiscussion from "./LikeDiscussion";
 import { Link } from "react-router-dom";
 
-export default function Articles() {
-  const [articles, setArticles] = useState([]);
+export default function Discussions() {
+  const [Discussions, setDiscussions] = useState([]);
   const [user] = useAuthState(auth);
   useEffect(() => {
-    const articleRef = collection(db, "Articles");
-    const q = query(articleRef, orderBy("createdAt", "desc"));
+    const DiscussionRef = collection(db, "Discussions");
+    const q = query(DiscussionRef, orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
-      const articles = snapshot.docs.map((doc) => ({
+      const Discussions = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setArticles(articles);
-      console.log(articles);
+      setDiscussions(Discussions);
+      console.log(Discussions);
     });
   }, []);
   return (
     <div>
-      {articles.length === 0 ? (
-        <p>No articles found!</p>
+      {Discussions.length === 0 ? (
+        <p>No Discussions found!</p>
       ) : (
-        articles.map(
+        Discussions.map(
           ({
             id,
             title,
@@ -41,7 +41,7 @@ export default function Articles() {
             <div className="border mt-3 p-3 bg-light" key={id}>
               <div className="row">
                 <div className="col-3">
-                  <Link to={`/article/${id}`}>
+                  <Link to={`/Discussion/${id}`}>
                     <img
                       src={imageUrl}
                       alt="title"
@@ -58,7 +58,7 @@ export default function Articles() {
                     </div>
                     <div className="col-6 d-flex flex-row-reverse">
                       {user && user.uid === userId && (
-                        <DeleteArticle id={id} imageUrl={imageUrl} />
+                        <DeleteDiscussion id={id} imageUrl={imageUrl} />
                       )}
                     </div>
                   </div>
@@ -67,7 +67,7 @@ export default function Articles() {
                   <h5>{description}</h5>
 
                   <div className="d-flex flex-row-reverse">
-                    {user && <LikeArticle id={id} likes={likes} />}
+                    {user && <LikeDiscussion id={id} likes={likes} />}
                     <div className="pe-2">
                       <p>{likes?.length} likes</p>
                     </div>

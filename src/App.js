@@ -1,10 +1,10 @@
-import Articles from "./components/Articles";
-import AddArticle from "./components/AddArticle";
+import Discussions from "./components/Discussions";
+import AddDiscussion from "./components/AddDiscussion";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import Article from "./components/Article";
+import Discussion from "./components/Discussion";
 function App() {
   return (
     <div className="container">
@@ -12,16 +12,16 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Login />} />
-          <Route path="/article/:id" element={<Article/>} />
+          <Route path="/Discussion/:id" element={<Discussion/>} />
           <Route
             path="/"
             element={
               <div className="row mt-5">
                 <div className="col-md-8">
-                  <Articles />
+                  <Discussions />
                 </div>
                 <div className="col-md-4">
-                  <AddArticle />
+                  <AddDiscussion />
                 </div>
               </div>
             }
